@@ -1,46 +1,30 @@
 import { Component } from 'react'
 import fetch from 'isomorphic-fetch'
-import Member from './Member'
+import User from './components/Deck'
 
-class MemberList extends Component {
+class Decks extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            members: [
+            decks: [
             {
-                name: "Joe Wilson",
-                email: "joe.wilson@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/53.jpg"
-            },
-            {
-                name: "Stacy Gardner",
-                email: "stacy.gardner@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/women/74.jpg"
-            },
-            {
-                name: "Billy Young",
-                email: "billy.young@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/34.jpg"
+                deckname: "Test Deck",
+                cardnum: "2",
+                author: "Jake",
             }
           ]
         }
     }
 
     render() {
-    	const { members } = this.state
+    	const { decks } = this.state
         return (
-            <div className="member-list">
-                <h1>Society Members</h1>
-                {members.map(
-                	(data, i) =>
-                		<Member key={i}
-                				onClick={email => console.log(email)}
-                				{...data} />
-                	 )}
+            <div className="deck-list">
+                <h1>Decks</h1>
             </div>
         )
     }
 }
 
-export default MemberList
+export default Decks

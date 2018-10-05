@@ -10,17 +10,14 @@ class UserList extends Component {
             {
                 name: "Joe Wilson",
                 email: "joe.wilson@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/53.jpg"
             },
             {
                 name: "Stacy Gardner",
                 email: "stacy.gardner@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/women/74.jpg"
             },
             {
                 name: "Billy Young",
                 email: "billy.young@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/34.jpg"
             }
           ]
         }
@@ -30,7 +27,7 @@ class UserList extends Component {
     	const { users } = this.state
         return (
             <div className="user-list">
-                <h1>Society Members</h1>
+                <h1>Users</h1>
                 {users.map(
                 	(data, i) =>
                 		<Member key={i}

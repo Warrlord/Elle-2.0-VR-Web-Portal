@@ -1,46 +1,28 @@
 import { Component } from 'react'
-import fetch from 'isomorphic-fetch'
-import Member from './Member'
 
-class MemberList extends Component {
+class Groups extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             groups: [
             {
-                name: "Joe Wilson",
-                email: "joe.wilson@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/53.jpg"
-            },
-            {
-                name: "Stacy Gardner",
-                email: "stacy.gardner@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/women/74.jpg"
-            },
-            {
-                name: "Billy Young",
-                email: "billy.young@example.com",
-                thumbnail: "https://randomuser.me/api/portraits/men/34.jpg"
+                name: "Group 01",
+                decks: "Test 01",
             }
           ]
         }
     }
 
     render() {
-    	const { members } = this.state
+    	const { groups } = this.state
         return (
-            <div className="member-list">
-                <h1>Society Members</h1>
-                {members.map(
-                	(data, i) =>
-                		<Member key={i}
-                				onClick={email => console.log(email)}
-                				{...data} />
-                	 )}
+            <div className="group-list">
+                <h1>Groups</h1>
+
             </div>
         )
     }
 }
 
-export default MemberList
+export default Groups
