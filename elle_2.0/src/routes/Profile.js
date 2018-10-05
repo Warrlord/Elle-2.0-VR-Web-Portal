@@ -1,21 +1,74 @@
-import FaShield from 'react-icons/lib/fa/shield'
-import { Component } from 'react'
+import { PropTypes, Component } from 'react'
 
-class Profile extends Component {
+export class Profile extends Component {
 
-render() {
+	constructor(props) {
+		super(props)
+		this.submit = this.submit.bind(this)
+	}
 
-	const { name, thumbnail, email, admin, makeAdmin } = this.props
-    return (
-        <div className="member">
-        	<h1>{name} {(admin) ? <FaShield /> : null}</h1>
-        	<a onClick={makeAdmin}>Make Admin</a>
-        	<img src={thumbnail} alt="profile picture" />
-        	<p><a href={`mailto:${email}`}>{email}</a></p>
+	submit(e) {
+		e.preventDefault()
+		console.log('username', this.refs.username.value)
+		console.log('email', this.refs.email.value)
+		console.log('playername', this.refs.playername.value)
+		console.log('password', this.refs.password.value)
 
-        </div>
-    )
+	}
+
+	render() {
+
+		const { username, email, playername, password } = this.props
+
+		return (
+			<form onSubmit={this.submit} className="profile-edit">
+
+				<label htmlFor="username">Username</label>
+				<input id="username"
+					   type="text"
+					   required
+					   defaultValue={username}
+					   ref="username"/>
+
+				<label htmlFor="email">Email</label>
+				<input id="email"
+					   type="email"
+					   required
+					   defaultValue={email}
+					   ref="email"/>
+
+			  <label htmlFor="playername">Player Name</label>
+ 			 	<input id="playername"
+ 					   type="playername"
+ 					   required
+ 					   defaultValue={playername}
+ 					   ref="playername"/>
+
+				<label htmlFor="password">Password</label>
+ 				<input id="password"
+ 					   type="password"
+ 					   required
+ 					   defaultValue={password}
+ 					   ref="password"/>
+
+
+				<button>Save Changes</button>
+			</form>
+		)
+	}
 }
+
+Profile.defaultProps = {
+	username: "User 1",
+	email: "User@me.com",
+	playername: "Player 1",
+	password: "pass"
 }
 
-export default Profile
+
+Profile.propTypes = {
+	username: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+	playername: PropTypes.string.isRequired,
+	password: PropTypes.string.isRequired
+}

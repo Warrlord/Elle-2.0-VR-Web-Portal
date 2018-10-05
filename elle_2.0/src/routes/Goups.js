@@ -7,7 +7,7 @@ class MemberList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            members: [
+            groups: [
             {
                 name: "Joe Wilson",
                 email: "joe.wilson@example.com",

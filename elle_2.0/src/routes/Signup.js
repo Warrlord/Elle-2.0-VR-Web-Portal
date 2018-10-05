@@ -1,135 +1,74 @@
-/** @jsx React.DOM */
-var React = require('react/addons');
-var Input = require('./components/Input.js');
-var Select = require('./components/Select');
-var Icon = require('./components/Icon.js');
+import { PropTypes, Component } from 'react'
 
-var Signup = React.createClass({
-  getInitialState: function () {
-    return {
-      email: null,
-      password: null,
-      confirmPassword: null,
-      forbiddenWords: ["password", "user", "username"]
-    }
-  },
+export const Signup = ({ username,
+							 password,
+							 playername,
+							 permission,
+               email }) => {
 
-  handlePasswordInput: function (event) {
-    if(!_.isEmpty(this.state.confirmPassword)){
-      this.refs.passwordConfirm.isValid();
-    }
-    this.refs.passwordConfirm.hideError();
-    this.setState({
-      password: event.target.value
-    });
-  },
+	let _username, _password, _permission, _email
 
-  handleConfirmPasswordInput: function (event) {
-    this.setState({
-      confirmPassword: event.target.value
-    });
-  },
+	const submit = (e) => {
+		e.preventDefault()
+		console.log('username', _username.value)
+		console.log('password', _password.value)
+		console.log('permission', _permission.value)
+    console.log('email', _email.value)
 
-  saveAndContinue: function (e) {
-    e.preventDefault();
+	}
 
-    var canProceed = this.validateEmail(this.state.email)
-        && !_.isEmpty(this.state.statesValue)
-        && this.refs.password.isValid()
-        && this.refs.passwordConfirm.isValid();
+	return (
+		<form onSubmit={submit} className="Signup-form">
 
-    if(canProceed) {
-      var data = {
-        email: this.state.email,
-        state: this.state.statesValue
-      }
-      alert('Thanks.');
-    } else {
-      this.refs.email.isValid();
-      this.refs.state.isValid();
-      this.refs.password.isValid();
-      this.refs.passwordConfirm.isValid();
-    }
-  },
+			<label htmlFor="username">Username</label>
+			<input id="username"
+				   type="text"
+				   required
+				   defaultValue={username}
+				   ref={input => _username = input}/>
 
-  isConfirmedPassword: function (event) {
-    return (event == this.state.password)
-  },
+			<label htmlFor="password">password</label>
+			<input id="password"
+				   type="text"
+				   required
+				   defaultValue={password}
+				   ref={input => _password = input}/>
 
-  handleEmailInput: function(event){
-    this.setState({
-      email: event.target.value
-    });
-  },
+      <label htmlFor="email">Email</label>
+			<input id="email"
+				   type="text"
+				   defaultValue={email}
+				   ref={input => _email = input}/>
 
-  validateEmail: function (event) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(event);
-  },
 
-  isEmpty: function (value) {
-    return !_.isEmpty(value);
-  },
-
-  render: function() {
-    return (
-      <div className="create_account_screen">
-
-        <div className="create_account_form">
-          <h1>Create account</h1>
-          <form onSubmit={this.saveAndContinue}>
-
-            <Input
-              text="Email Address"
-              ref="email"
-              type="text"
-              defaultValue={this.state.email}
-              validate={this.validateEmail}
-              value={this.state.email}
-              onChange={this.handleEmailInput}
-              errorMessage="Email is invalid"
-              emptyMessage="Email can't be empty"
-              errorVisible={this.state.showEmailError}
-            />
-
-            <Input
-              text="Password"
-              type="password"
-              ref="password"
-              validator="true"
-              minCharacters="8"
-              requireCapitals="1"
-              requireNumbers="1"
-              forbiddenWords={this.state.forbiddenWords}
-              value={this.state.passsword}
-              emptyMessage="Password is invalid"
-              onChange={this.handlePasswordInput}
-            />
-
-            <Input
-              text="Confirm password"
-              ref="passwordConfirm"
-              type="password"
-              validate={this.isConfirmedPassword}
-              value={this.state.confirmPassword}
-              onChange={this.handleConfirmPasswordInput}
-              emptyMessage="Please confirm your password"
-              errorMessage="Passwords don't match"
-            />
-
-            <button
-              type="submit"
-              className="button button_wide">
-              CREATE ACCOUNT
-            </button>
-
-          </form>
-        </div>
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Permission
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="NA">None</a>
+            <a class="dropdown-item" href="0">User</a>
+            <a class="dropdown-item" href="1">Author</a>
+            <a class="dropdown-item" href="2">Admin</a>
+          </div>
       </div>
-    );
-  }
 
-});
+			<button>Signup</button>
+		</form>
+	)
+}
 
-module.exports = Signup;
+Signup.defaultProps = {
+	username: "User",
+	password: "pass",
+	permission: "None"
+  email: "User@me.com"
+}
+
+
+Signup.propTypes = {
+	username: PropTypes.string.isRequired,
+	password: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+  permission: PropTypes.string.isRequired,
+}

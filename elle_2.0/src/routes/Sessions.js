@@ -1,13 +1,12 @@
 import { Component } from 'react'
-import fetch from 'isomorphic-fetch'
-import Member from './Member'
+import Session from '../components/Session'
 
-class MemberList extends Component {
+class Sessions extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            members: [
+            Session: [
             {
                 name: "Joe Wilson",
                 email: "joe.wilson@example.com",
@@ -28,10 +27,10 @@ class MemberList extends Component {
     }
 
     render() {
-    	const { members } = this.state
+    	const { Session } = this.state
         return (
             <div className="member-list">
-                <h1>Society Members</h1>
+                <h1>Sessions</h1>
                 {members.map(
                 	(data, i) =>
                 		<Member key={i}
@@ -43,4 +42,4 @@ class MemberList extends Component {
     }
 }
 
-export default MemberList
+export default Sessions
