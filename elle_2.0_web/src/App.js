@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import './stylesheets/App.css';
-import Home from './pages/Home'
+import Template from './pages/Template'
 import Groups from './pages/Groups'
 import Decks from './pages/Decks'
 import Profile from './pages/Profile'
@@ -13,7 +12,7 @@ class App extends Component {
     return (
         <Router>
           <div>
-            <Route path="/" component={Home} />
+            <Route path="/" component={Template} />
             <Route path="/Groups" component={Groups} />
             <Route path="/Decks" component={Decks} />
             <Route path="/Profile" component={Profile} />
