@@ -29,8 +29,8 @@ class UserList extends Component {
             <div className="user-list">
                 <h1>Users</h1>
                 {users.map(
-                	(data, i) =>
-                		<Member key={i}
+                	(users, i) =>
+                		<users key={i}
                 				onClick={email => console.log(email)}
                 				{...data} />
                 	 )}

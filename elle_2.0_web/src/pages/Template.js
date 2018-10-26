@@ -1,40 +1,65 @@
 import React from 'react';
-import { Navbar, NavItem, Nav, NavDropdown, MenuItem, PageHeader } from 'react-bootstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 
 export default class Template extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
   render() {
     return (
       <div>
-      <Navbar inverse collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="/">Elle VR</a>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <NavItem eventKey={1} href="/Groups">
-              Groups
-            </NavItem>
-            <NavItem eventKey={2} href="/Decks">
-              Decks
-            </NavItem>
-          </Nav>
-          <Nav pullRight>
-            <NavDropdown eventKey={3} title="User" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Profile</MenuItem>
-              <MenuItem eventKey={3.2}>Sessions</MenuItem>
-              <MenuItem eventKey={3.3}>UserList</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={3.3}>Sign out</MenuItem>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>;
-        <PageHeader>
-          Welcome to Elle VR Website "Username"
-        </PageHeader>
+        <Navbar color="primary" light expand="md">
+          <NavbarBrand href="/Home">Elle VR</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="/Groups">Groups</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/Decks">Decks</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  User
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    <NavLink href="/Profile">Profile</NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink href="/Sessions">Sessions</NavLink>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    <NavLink href="/Login">Sign Out</NavLink>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
       </div>
     );
   }

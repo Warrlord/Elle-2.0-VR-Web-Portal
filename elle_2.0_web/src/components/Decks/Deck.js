@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 
 
-class Deck extends Component {
-	constructor(props){
-		super(props);
-	}
-
-	render() {
-		const { id, name, author, cardnum } = this.props.adeck;
-	    return (
-				<div>
-
-				</div>
-	    )
-	}
-}
+const Deck = (props) => {
+  const { decks } = props;
+  return (
+    <tr>
+			<td>{decks.id}</td>
+			<td>{decks.name}</td>
+			<td>{decks.author}</td>
+    </tr>
+  );
+};
 
 export default Deck
