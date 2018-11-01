@@ -6,7 +6,8 @@ export default class Signup extends React.Component {
 		super();
 		this.state = {
 			username: '',
-			playerName: '',
+			age: '',
+			sex: '',
 			password: ''
 		}
 	}
@@ -24,11 +25,22 @@ export default class Signup extends React.Component {
 	          <FormText>Username to be Identified on the Site.</FormText>
 	        </FormGroup>
 	        <FormGroup>
-	          <Label for="playerName">Player Name</Label>
-	          <Input placeholder="Player 1"/>
-	          <FormFeedback valid>Sweet! that name is available</FormFeedback>
-	          <FormText>Player Name that you used in Game.</FormText>
+	          <Label for="age">Age:</Label>
+	          <Input placeholder="18"/>
+	          <FormText>Your Age.</FormText>
 	        </FormGroup>
+					<FormGroup>
+						<Label for="sex">Sex:</Label>
+						<Input type="select" name="sex" id="sex">
+							<option>Male</option>
+							<option>Female</option>
+							<option>Prefer Not To Specify</option>
+						</Input>
+					</FormGroup>
+					<FormGroup>
+						<Label for="description" sm={2}>Description:</Label>
+						<Input type="textarea" name="description" id="description" />
+					</FormGroup>
 	        <FormGroup>
 	          <Label for="password">Password</Label>
 	          <Input placeholder="*********"/>

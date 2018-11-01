@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -29,7 +30,7 @@ export default class Template extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="primary" light expand="md">
+        <Navbar color="secondary" light expand="md">
           <NavbarBrand href="/Home">Elle VR</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

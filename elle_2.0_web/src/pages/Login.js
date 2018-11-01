@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Signup from './Signup'
 
-export default class Login extends React.Component {
+export default class Login extends Component {
   constructor() {
     super();
     this.state = {

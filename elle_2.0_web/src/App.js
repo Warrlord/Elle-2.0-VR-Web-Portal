@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
         <Router>
-          <div >
+          <div className="RouterControl" >
             <Route path="/" component={Template} />
             <Route path="/Groups" component={Groups} />
             <Route path="/Decks" component={Decks} />

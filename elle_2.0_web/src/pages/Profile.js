@@ -1,13 +1,15 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       username: "TempUser",
-      playername: "Player 1",
+      age: "18",
+      sex: "M",
       userID: "0123",
+      description: "Test account"
     };
   }
 
@@ -21,12 +23,17 @@ export default class Profile extends React.Component {
             <Input type="text" name="username" id="username" disabled="true" placeholder={this.state.username} />
           </FormGroup>
           <FormGroup row>
-            <Label for="playerName">Player Name</Label>
-            <Input type="text" name="playerName" id="playerName" disabled="true" placeholder={this.state.playername} />
+            <Label for="age">Age</Label>
+            <Input type="number" name="age" id="age" disabled="true" placeholder={this.state.age} />
           </FormGroup>
           <FormGroup row>
-            <Label for="userID">User ID</Label>
-            <Input type="text" name="userID" id="userID" disabled="true" placeholder={this.state.userID} />
+            <Label for="sex">Sex</Label>
+            <Input type="text" name="sex" id="sex" disabled="true" placeholder={this.state.sex} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="description" sm={2}>Description:</Label>
+            <Input type="textarea" name="description" id="description" placeholder={this.state.description} />
+            <Button>Update Description</Button>
           </FormGroup>
         </Form>
         <Form className="PasswordReset">

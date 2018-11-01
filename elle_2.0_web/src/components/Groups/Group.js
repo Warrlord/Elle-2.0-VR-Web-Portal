@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 
 const Group = (props) => {
@@ -6,7 +6,7 @@ const Group = (props) => {
   return (
     <tr>
 			<td>{groups.id}</td>
-			<td>{groups.groupName}</td>
+			<td>{groups.name}</td>
     </tr>
   );
 };
