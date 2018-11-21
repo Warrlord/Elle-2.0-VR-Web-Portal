@@ -30,16 +30,16 @@ export default class Template extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="secondary" light expand="md">
+        <Navbar light expand="md">
           <NavbarBrand href="/Home">Elle VR</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/Groups">Groups</NavLink>
+                <NavLink href="/groups">Groups</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/Decks">Decks</NavLink>
+                <NavLink href="/decks">Decks</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -47,14 +47,14 @@ export default class Template extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink href="/Profile">Profile</NavLink>
+                    <NavLink href="/profile">Profile</NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href="/Sessions">Sessions</NavLink>
+                    <NavLink href="/sessions">Sessions</NavLink>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    <NavLink href="/Login">Sign Out</NavLink>
+                    <NavLink href="/login">Sign Out</NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

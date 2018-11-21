@@ -22,42 +22,13 @@ export default class Decks extends Component {
       selectedDeck: "",
       selectedCard: "",
 
-      decks: [
-        {
-          id: 1,
-          name: "Test Deck",
-          author: "Mark"
-        },
-        {
-          id: 2,
-          name: "Test Deck 02",
-          author: "Sam"
-        }
-      ],
+      decks: [],
 
-      cards: [
-        {
-          id: 1,
-          deckid: 1,
-          engName: "Goodbye",
-          traName: "adios",
-          author: "TempUser",
-          engPic: 0,
-          tranPic: 0,
-          pic: 0,
-          audioFile: 0,
-        },
-        {
-          id: 1,
-          engName: "hello",
-          traName: "aloha",
-          author: "TempUser",
-          engPic: "0",
-          tranPic: "0",
-          pic: "0",
-          audioFile: "0"
-        }
-      ]
+      cards: [],
+
+      audio: [],
+
+      image: []
     };
   }
 

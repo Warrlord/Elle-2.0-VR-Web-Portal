@@ -5,11 +5,13 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
-      username: "TempUser",
-      age: "18",
-      sex: "M",
-      userID: "0123",
-      description: "Test account"
+        userID: "101",
+        username: "TempUser",
+        permissionGroup: "1",
+        isPendingAdmin: "false",
+        sex: "M",
+        age: "18",
+        motivation: "Wants to be tested!"
     };
   }
 
@@ -31,8 +33,8 @@ export default class Profile extends React.Component {
             <Input type="text" name="sex" id="sex" disabled="true" placeholder={this.state.sex} />
           </FormGroup>
           <FormGroup>
-            <Label for="description" sm={2}>Description:</Label>
-            <Input type="textarea" name="description" id="description" placeholder={this.state.description} />
+            <Label for="motivation" sm={2}>Motivation:</Label>
+            <Input type="textarea" name="motivation" id="motivation" placeholder={this.state.motivation} />
             <Button>Update Description</Button>
           </FormGroup>
         </Form>

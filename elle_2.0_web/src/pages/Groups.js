@@ -28,46 +28,13 @@ export default class Groups extends React.Component {
       selectedCard: "",
       activeTab: "1",
 
-      groups: [
-        {
-          groupid: 1,
-          name: "Test Group",
-          author: "Mark"
-        },
-        {
-          groupid: 1,
-          name: "Test Group 02",
-          author: "Sam"
-        }
-      ],
+      groups: [],
 
-      decks: [
-        {
-          id: 1,
-          name: "Test Deck",
-          author: "Mark"
-        },
-        {
-          id: 2,
-          name: "Test Deck 02",
-          author: "Sam"
-        }
-      ],
+      decks: [],
 
-      users: [
-        {
-          userid: 1,
-          groupid: 1,
-          name: "Mark",
-          score: "1000"
-        },
-        {
-          userid: 2,
-          groupid: 1,
-          name: "Mark",
-          score: "1000"
-        }
-      ]
+      group_user: [],
+
+      user: []
     };
   }
 
