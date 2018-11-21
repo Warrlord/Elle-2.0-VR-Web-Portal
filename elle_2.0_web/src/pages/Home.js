@@ -11,8 +11,8 @@ const Home = (props) => {
         <hr className="my-2" />
         <p>Helpful Information will be added soon!</p>
         <p className="lead">
-          <Button color="primary">Login</Button>
-          <Button color="info">Signup</Button>
+          <Button color="primary" href="/login">Login</Button>
+          <Button color="info" href="/signup">Signup</Button>
         </p>
       </Jumbotron>
     </div>

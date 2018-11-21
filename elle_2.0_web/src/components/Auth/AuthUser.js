@@ -7,32 +7,33 @@ class AuthUser extends Component {
     super(props);
 
     this.state = {
-      userID: undefined,
+      userID: 3000,
       perm: undefined
 
     };
   }
 
-  componentDidMount() {
-    const jwt = localStorage.getItem('jwt');;
-    if(!jwt) {
-      this.props.history.push('/login');
-    }
-
-    axios.get('/getUser/', { headers: { Authorization: 'user ${jwt}' } }).then(res => this.setState({
-      user: res.data
-    })).catch(err => {
-      localStorage.removeItem('jwt')
-      this.props.history.push('/login');
-    });
-  }
+//  componentDidMount() {
+//    const jwt = localStorage.getItem('jwt');;
+//    if(!jwt) {
+//      this.props.history.push('/login');
+//    }
+//
+//    axios.get('/getUser/', { headers: { Authorization: 'user ${jwt}' } }).then(res => this.setState({
+//      userID: res.data,
+//      permission: res.data
+//    })).catch(err => {
+//      localStorage.removeItem('jwt')
+//      this.props.history.push('/login');
+//    });
+//  }
 
   render () {
-    if(this.state.user === undefined){
-      return (
-        <div><h1>Loading...</h1></div>
-      );
-    }
+//    if(this.state.user == undefined){
+//      return (
+//        <div><h1>Loading...</h1></div>
+//      );
+//    }
     return (
       <div>
         {this.props.children}

@@ -9,52 +9,9 @@ export default class Sessions extends React.Component {
     super();
 
     this.state = {
-      sessions: [
-        {
-          id: "100",
-          userid: "3001",
-          wrongAns: "21",
-          correctAns: "31",
-          date: "2018-18-12",
-          puzleAttempted: "puzzlename",
-          responseScore: "31",
-          playerScore: "75",
-          elaspsedTime: "00:10:56"
-        }
-      ],
+      sessions: [],
 
-      LoggedAnswes: [
-        {
-          cardID: "0",
-          sessionID: "100",
-          numberOfCorrectAnswers: "1",
-          numberOfIncorrectAnswers: "2"
-        },
-        {
-          cardID: "1",
-          sessionID: "100",
-          numberOfCorrectAnswers: "1",
-          numberOfIncorrectAnswers: "2"
-        },
-        {
-          cardID: "2",
-          sessionID: "100",
-          numberOfCorrectAnswers: "1",
-          numberOfIncorrectAnswers: "2"
-        },
-        {
-          cardID: "3",
-          sessionID: "100",
-          numberOfCorrectAnswers: "1",
-          numberOfIncorrectAnswers: "2"
-        },
-        {
-          cardID: "4",
-          sessionID: "100",
-          numberOfCorrectAnswers: "1",
-          numberOfIncorrectAnswers: "2"
-        },
-      ]
+      LoggedAnswes: []
     }
   }
 

@@ -25,7 +25,7 @@ export default class Login extends Component {
             <Input type="password" name="password" id="examplePassword" placeholder="Password" />
           </FormGroup>
           {' '}
-          <Button color="primary">Submit</Button>
+          <Button color="primary" onClick>Submit</Button>
         </Form>
         <Link to ='/Signup' >Signup</Link>
       </Container>
