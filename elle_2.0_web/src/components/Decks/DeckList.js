@@ -7,16 +7,14 @@ const DeckList = (props) => {
         <Table hover>
           <thead>
             <tr>
-              <th>#</th>
               <th>Deck Name</th>
-              <th>Author</th>
             </tr>
           </thead>
           <tbody>
             {props.decks.map((decks) => {
               return (
                 <Deck
-                  key={decks.id}
+                  key={decks.deckID}
                   decks={decks}/>
               )
             })}

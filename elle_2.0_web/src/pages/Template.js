@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink as RNavLink} from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -22,6 +22,7 @@ export default class Template extends React.Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -31,15 +32,15 @@ export default class Template extends React.Component {
     return (
       <div>
         <Navbar light expand="md">
-          <NavbarBrand href="/Home">Elle VR</NavbarBrand>
+          <NavbarBrand to="/sessions" tag={RNavLink}>Elle VR</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/groups">Groups</NavLink>
+                <NavLink to="/groups" tag={RNavLink}>Groups</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/decks">Decks</NavLink>
+                <NavLink to="/decks" tag={RNavLink}>Decks</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -47,14 +48,14 @@ export default class Template extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink href="/profile">Profile</NavLink>
+                    <NavLink to="/profile" tag={RNavLink}>Profile</NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href="/sessions">Sessions</NavLink>
+                    <NavLink to="/sessions" tag={RNavLink}>Sessions</NavLink>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    <NavLink href="/login">Sign Out</NavLink>
+                    <NavLink to="/login" tag={RNavLink}>Sign Out</NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

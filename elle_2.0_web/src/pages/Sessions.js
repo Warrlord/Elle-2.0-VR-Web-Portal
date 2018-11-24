@@ -1,31 +1,89 @@
-import React from 'react';
-import { Container, Col, Row } from 'reactstrap';
+import React, { Component } from 'react';
+import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, FormText, Col, Nav, NavItem, NavLink } from 'reactstrap';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
 
 import SessionList from '../components/Sessions/SessionList';
-
+import SessionNav from '../components/Sessions/SessionNav';
+import Rounds from '../components/Sessions/Rounds';
 
 export default class Sessions extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      sessions: [],
+      userID: '',
+
+      sessions: [
+        {
+          sessionID: '500',
+          userID: '3001',
+          sessionDate: '11/24/18',
+          responseScore: '34'
+        }
+      ],
 
       LoggedAnswes: []
     }
   }
 
+  componentDidMount() {
+    axios.get('10.171.204.206/sessions/userID')
+      .then(res => {
+        const sessions = res.data;
+        this.setState({ sessions });
+      });
+  }
 
   render() {
+
+    const matchPath = this.props.match.path;
+
     return (
       <Container>
-        <Row>
-          <h3>Sessions: </h3>
-        </Row>
-        <Row>
-          <SessionList
-            sessions={this.state.sessions}
-          />
+        <Row><h3>Your Elle VR Sessions:</h3></Row>
+        <Row className="Seperated Col">
+        <Col className="Left Column" xs="3">
+          <Row>
+            <Col>
+                <Card>
+                  <SessionNav
+                    sessions={this.state.sessions}
+                    sessionsPathname={matchPath}
+                  />
+                </Card>
+            </Col>
+          </Row>
+        </Col>
+        <Col className="Right Column">
+          <Row>
+            <Col>
+              <Container>
+                <Card>
+                  <Route exact path={matchPath} render={() => (
+                    <div>
+                      <h3>Please select a Deck on the left</h3>
+                    </div>
+                  )} />
+                  <Route
+                    path={`${matchPath}/:sessionID`}
+                    render={({ match }) => {
+                      const album = this.state.sessions.find(
+                        (a) => a.id === match.params.sessionID
+                      );
+                      return (
+                        <Rounds
+                          session={this.state.session}
+                        />
+                      );
+                    }}
+                  />
+
+                </Card>
+              </Container>
+            </Col>
+          </Row>
+        </Col>
         </Row>
       </Container>
     );
