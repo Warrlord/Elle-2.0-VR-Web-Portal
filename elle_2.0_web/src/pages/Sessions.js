@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, FormText, Col, Nav, NavItem, NavLink } from 'reactstrap';
+import { Card, Container, Row, Col, } from 'reactstrap';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,21 +14,14 @@ export default class Sessions extends React.Component {
     this.state = {
       userID: '',
 
-      sessions: [
-        {
-          sessionID: '500',
-          userID: '3001',
-          sessionDate: '11/24/18',
-          responseScore: '34'
-        }
-      ],
+      sessions: [],
 
-      LoggedAnswes: []
+      LoggedAnswers: []
     }
   }
 
   componentDidMount() {
-    axios.get('10.171.204.206/sessions/userID')
+    axios.get('http://10.171.204.206/sessions/')
       .then(res => {
         const sessions = res.data;
         this.setState({ sessions });

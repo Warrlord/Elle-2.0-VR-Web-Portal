@@ -9,17 +9,16 @@ const DeckNav = (props) => {
     <Nav vertical>
       <NavItem>
       {
-        decks.map((deck) => {
-        return (
+        decks.map((deck) => (
             <NavLink
-              key={deck.deckID}
-              to={`${decksPathname}/${deck.deckID}`}
+              key={deck.id}
+              to={`${decksPathname}/${deck.id}`}
               className='item'
               tag={RNavLink}
             >
-              {deck.deckName}
+              {deck.name}
             </NavLink>
-        )})
+        ))
       }
       </NavItem>
     </Nav>

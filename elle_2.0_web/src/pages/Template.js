@@ -55,7 +55,7 @@ export default class Template extends React.Component {
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    <NavLink to="/login" tag={RNavLink}>Sign Out</NavLink>
+                    <NavLink to="/logout" tag={RNavLink}>Sign Out</NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

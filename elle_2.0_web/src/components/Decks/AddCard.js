@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, FormText, Col } from 'reactstrap';
+import React from 'react';
+import { Button, Form, FormGroup, Label, Input, Row, FormText, Col } from 'reactstrap';
 
 const AddCard = (props) => {
 	    return (

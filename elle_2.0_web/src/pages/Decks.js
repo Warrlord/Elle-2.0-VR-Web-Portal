@@ -3,35 +3,28 @@ import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, 
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
-import AddCard from '../components/Decks/AddCard'
-import DeckNav from '../components/Decks/DeckNav'
+import AddCard from '../components/Decks/AddCard';
+import DeckNav from '../components/Decks/DeckNav';
+import Deck from '../components/Decks/Deck';
 
-import CardList from '../components/Decks/CardList'
+
+import CardList from '../components/Decks/CardList';
 
 export default class Decks extends Component {
   constructor() {
     super();
     this.toggle = this.toggle.bind(this);
     this.toggleNewCard = this.toggleNewCard.bind(this);
-
     this.state = {
       colapse: false,
       collapseNewCard: false,
-      userID: "3001",
-      username: "TempUser",
+      userID: "",
+      username: "",
 
-      decks: [
-        {
-          deckID: 300,
-          deckName: "Spanish Vocab",
-          author: 'Mark'
-        },
-        {
-          deckID: 302,
-          deckName: "Spanish Vocab",
-          author: 'Mark'
-        }
-      ],
+      deckName: "",
+      ttype: "",
+
+      decks: [],
 
       cards: [],
 
@@ -42,11 +35,27 @@ export default class Decks extends Component {
   }
 
   componentDidMount() {
-    axios.get('10.171.204.206/decks/userID')
-      .then(res => {
-        const decks = res.data;
-        this.setState({ decks });
-      });
+      axios.get('http://10.171.204.206/decks/49', { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') } })
+        .then(res => {
+          console.log(res.data);
+          const decks = res.data;
+          this.setState({
+            decks : res.data });
+        }).catch(function (error) {
+          console.log(error);
+        });
+    }
+
+  submitDeck(e) {
+    e.preventDefault();
+    const jwt = localStorage.getItem('jwt');
+    console.log(jwt);
+    axios.post('http://10.171.204.206/deck', { headers: { Authorization: 'Bearer ${jwt}' },
+      deckName: this.state.deckName,
+      ttype: this.state.ttype,
+    }).then(res => {
+
+    });
   }
 
   toggleNewCard() {
@@ -59,7 +68,6 @@ export default class Decks extends Component {
 
   formSubmitted(event) {
   event.preventDefault();
-
   this.setState({
     newDeck: '',
     decks: [...this.state.decks, {
@@ -81,17 +89,21 @@ export default class Decks extends Component {
           <Row>
             <Col>
                 <Card>
-                    <Form>
+                    <DeckNav
+                      decks={this.state.decks}
+                      decksPathname={matchPath}
+                    />
+                    <Form onSubmit={e => this.submitDeck(e)}>
                       <FormGroup>
-                        <Label for="deckname" hidden>Deck Name</Label>
-                        <Input type="deckname" name="deckname" id="deckname" placeholder="Deck Name" />
+                        <Label for="deckname">Deck Name</Label>
+                        <Input type="text" name="deckname" id="deckname" placeholder="Deck Name" />
                       </FormGroup>
-                      <Button color="primary" block>Add Deck</Button>
+                      <FormGroup>
+                        <Label for="ttype">Language Type</Label>
+                        <Input type="text" name="ttype" id="ttype" placeholder="Portuguess" />
+                      </FormGroup>
+                      <Button color="primary" block type="submit">Add Deck</Button>
                     </Form>
-                      <DeckNav
-                        decks={this.state.decks}
-                        decksPathname={matchPath}
-                      />
                 </Card>
             </Col>
           </Row>
@@ -101,25 +113,32 @@ export default class Decks extends Component {
             <Col>
               <Container>
                     <Card>
-                      <Button color="info" onClick={this.toggleNewCard}>New Card</Button>
-                      <Collapse isOpen={this.state.collapseNewCard}>
-                        <AddCard />
-                      </Collapse>
                       <Route exact path={matchPath} render={() => (
                         <div>
                           <h3>Please select a Deck on the left</h3>
                         </div>
                       )} />
                       <Route
-                        path={`${matchPath}/:deckID`}
+                        path={`${matchPath}/:id`}
                         render={({ match }) => {
-                          const album = this.state.decks.find(
-                            (a) => a.id === match.params.deckID
+                          const deck = this.state.decks.find(
+                            (a) => a.id === match.params.id
                           );
                           return (
-                            <CardList
-                              cards={this.state.cards}
-                            />
+                            <Container>
+                              <Deck
+                                url={match.url}
+                                deck={deck}
+                                deckPathname={matchPath}
+                              />
+                              <CardList
+                                cards={this.state.cards}
+                              />
+                              <Button color="info" onClick={this.toggleNewCard} block>New Card</Button>
+                                <Collapse isOpen={this.state.collapseNewCard}>
+                                  <AddCard />
+                                </Collapse>
+                            </Container>
                           );
                         }}
                       />

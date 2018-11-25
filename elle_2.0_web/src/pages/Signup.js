@@ -12,10 +12,19 @@ export default class Signup extends React.Component {
 			sex: '',
 			password: '',
 			motivation: '',
-
+			permission: 'User',
 			message: '',
 		}
+		this.handleChange = this.handleChange.bind(this);
+		this.change = this.change.bind(this);
+		this.submit = this.submit.bind(this);
 	};
+
+	handleChange(event) {
+			 this.setState({
+					 sex: event.target.value,
+			 })
+	 }
 
 	change(e) {
 		this.setState({
@@ -24,16 +33,18 @@ export default class Signup extends React.Component {
 	}
 
 	submit(e) {
+		console.log(this.state.username);
+		console.log(this.state.sex);
 		e.preventDefault();
-		axios.post('10.171.204.206/signup', {
+		axios.post('http://10.171.204.206/register', {
 			username: this.state.username,
 			password: this.state.password,
-			age: this.state.age,
+ 			age: this.state.age,
 			sex: this.state.sex,
 			motivation: this.state.motivation
 		}).then(res => {
 			localStorage.setItem('jwt', res.data);
-			this.props.history.push('/');
+			this.props.history.push('/login');
 		});
 	}
 
@@ -66,13 +77,12 @@ export default class Signup extends React.Component {
 					<FormGroup>
 						<Label for="sex">Sex:</Label>
 						<Input value={this.state.sex}
-							onChange={e => this.change(e)}
+							onChange={(e) => this.handleChange(e)}
 							type="select"
 							name="sex"
 							id="sex">
-							<option>Male</option>
-							<option>Female</option>
-							<option>Prefer Not To Specify</option>
+							<option value="F">Male</option>
+							<option value="M">Female</option>
 						</Input>
 					</FormGroup>
 					<FormGroup>
@@ -93,12 +103,6 @@ export default class Signup extends React.Component {
 							placeholder="*********"/>
 	          <FormText>Please enter your chosen password.</FormText>
 	        </FormGroup>
-					<FormGroup>
-						<Label for="password">Re-Enter Password</Label>
-						<Input type="text"
-						placeholder="*********"/>
-						<FormText>Please Re-enter your password.</FormText>
-					</FormGroup>
 					<Button type="submit">Signup</Button>
 	      </Form>
 					<Link to='/login'>Login</Link>

@@ -74,7 +74,12 @@ export default class Groups extends React.Component {
     return (
       <Container>
         <Row><h3>Please Choose a Group</h3></Row>
-        <Row><h4>Selected Group: {this.state.selectedDeck}</h4></Row>
+        <Row className="Seperated col">
+          <Col className="Left Col" xs="3">
+          </Col>
+          <Col className="Right Col">
+          </Col>
+        </Row>
         <Row><p>Selected Card: {this.state.selectedCard}</p></Row>
         <Row>
           <Col>

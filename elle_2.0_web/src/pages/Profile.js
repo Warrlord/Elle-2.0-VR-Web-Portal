@@ -33,20 +33,20 @@ export default class Profile extends React.Component {
 
 submitMot(e) {
     e.preventDefault();
-    axios.post('10.171.204.206/update/:userID/motivation', {
+    axios.post('http://10.171.204.206/update/:userID/motivation', {
       motivation: this.state.motivation,
     });
   }
 
 submitPass(e) {
     e.preventDefault();
-    axios.post('10.171.204.206/update/:userID/newpass', {
+    axios.post('http://10.171.204.206/update/:userID/newpass', {
       password: this.state.newpass,
     });
   }
 
 componentDidMount() {
-  axios.get('10.171.204.206/user/:userID')
+  axios.get('http://10.171.204.206/user/:userID')
     .then(res => {
       const users = res.data;
       this.setState({ users });

@@ -24,7 +24,6 @@ const GroupNav = (props) => {
       </NavItem>
     </Nav>
   )
-
 };
 
 export default GroupNav;

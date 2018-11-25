@@ -6,20 +6,7 @@ class UserList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: [
-            {
-                name: "Joe Wilson",
-                email: "joe.wilson@example.com",
-            },
-            {
-                name: "Stacy Gardner",
-                email: "stacy.gardner@example.com",
-            },
-            {
-                name: "Billy Young",
-                email: "billy.young@example.com",
-            }
-          ]
+            users: []
         }
     }
 

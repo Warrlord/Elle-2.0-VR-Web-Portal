@@ -6,23 +6,26 @@ import Decks from './pages/Decks';
 import Profile from './pages/Profile';
 import Sessions from './pages/Sessions';
 import Login from './pages/Login'
+import Logout from './pages/Logout'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import AuthUser from './components/Auth/AuthUser';
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       LoggedIn: true,
       permission: 0,
     };
   }
+
   render() {
     return (
         <Router>
         <div>
           <Switch>
+            <Route path="/logout" component={Logout} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/home" component={Home} />
