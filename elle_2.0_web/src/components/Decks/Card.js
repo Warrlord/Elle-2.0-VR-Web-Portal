@@ -6,12 +6,10 @@ const Card = (props) => {
   return (
     <tr>
 			<td>{cards.id}</td>
-			<td>{cards.engName}</td>
-			<td>{cards.traName}</td>
-      <td>{cards.author}</td>
-      <td>{cards.author}</td>
-      <td>{cards.author}</td>
-      <td>{cards.author}</td>
+			<td>{cards.front}</td>
+			<td>{cards.back}</td>
+      <td>{cards.imageLocation}</td>
+      <td>{cards.audioLocation}</td>
     </tr>
   );
 };

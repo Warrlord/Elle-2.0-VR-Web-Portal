@@ -1,6 +1,9 @@
 import React from 'react';
-import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, CardTitle, CardText } from 'reactstrap';
-import classnames from 'classnames';
+import { Collapse, Button, Card, Form, FormGroup,
+  Label, Input, Container, Row, Col, TabContent,
+  TabPane, Nav, NavItem, NavLink, CardTitle, CardText } from 'reactstrap';
+import axios from 'axios';
+import { Route } from 'react-router-dom';
 
 
 import GroupList from '../components/Groups/GroupList';
@@ -9,25 +12,16 @@ import GroupUsers from '../components/Groups/GroupUsers';
 import GroupSessions from '../components/Groups/GroupSessions';
 import GroupStats from '../components/Groups/GroupStats';
 import DeckList from '../components/Decks/DeckList';
+import GroupNav from '../components/Groups/GroupNav';
 
 export default class Groups extends React.Component {
   constructor() {
     super();
-    this.toggle = this.toggle.bind(this);
-    this.toggleNewGroup = this.toggleNewGroup.bind(this);
-    this.toggleTab = this.toggleTab.bind(this);
-    this.toggleDeck = this.toggleDeck.bind(this);
+    this.change = this.change.bind(this);
+    this.submitGroup = this.submitGroup.bind(this);
 
     this.state = {
-      collapseGroup: false,
-      colapse: false,
-      colapseDeck: false,
-      collapseNewGroup: false,
-      author: "TempUser",
-      selectedDeck: "",
-      selectedCard: "",
-      activeTab: "1",
-
+      groupName: '',
       groups: [],
 
       decks: [],
@@ -37,144 +31,95 @@ export default class Groups extends React.Component {
       user: []
     };
   }
-
-  toggleTab(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
+  componentDidMount() {
+      axios.get('http://10.171.204.206/groups', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => {
+          console.log(res.data);
+          const groups = res.data;
+          this.setState({
+            groups : res.data });
+        }).catch(function (error) {
+          console.log(error);
+        });
     }
+
+  submitGroup(e) {
+    e.preventDefault();
+    axios.post('http://10.171.204.206/group', {
+      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') },
+      groupName: this.state.groupName,
+    }).then(res => {
+      console.log(res.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 
-  toggleNewGroup() {
-    this.setState({ collapseNewGroup: !this.state.collapseNewGroup });
+  change(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
-  }
-
-  toggleDeck() {
-    this.setState({ collapseDeck: !this.state.collapseDeck });
-  }
-
-  formSubmitted(event) {
-  event.preventDefault();
-
-  this.setState({
-    newDeck: '',
-    decks: [...this.state.decks, {
-      title: this.state.newDeck,
-      author: "TempUser"
-    }]
-  });
-}
 
   render() {
+    const matchPath = this.props.match.path;
     return (
       <Container>
-        <Row><h3>Please Choose a Group</h3></Row>
-        <Row className="Seperated col">
-          <Col className="Left Col" xs="3">
-          </Col>
-          <Col className="Right Col">
-          </Col>
-        </Row>
-        <Row><p>Selected Card: {this.state.selectedCard}</p></Row>
-        <Row>
-          <Col>
-            <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }} block>Groups</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Collapse isOpen={this.state.collapse}>
-              <Card>
-                <Button color="info" onClick={this.toggleNewGroup}>New Group</Button>
-                  <Collapse isOpen={this.state.collapseNewGroup}>
-                    <Form>
+        <Row><h3>Your Elle VR Decks:</h3></Row>
+        <Row className="Seperated Col">
+        <Col className="Left Column" xs="3">
+          <Row>
+            <Col>
+                <Card>
+                    <GroupNav
+                      groups={this.state.groups}
+                      groupsPathname={matchPath}
+                    />
+                    <Form onSubmit={e => this.submitGroup(e)}>
                       <FormGroup>
-                        <Label for="groupName" >Group Name:</Label>
-                        <Input type="groupName" name="groupName" id="groupName" placeholder="Group Name" />
+                        <Label for="groupName">Deck Name</Label>
+                        <Input type="text"
+                        onChange={e => this.change(e)}
+                        value={this.state.groupName}
+                        name="groupName"
+                        id="groupName"
+                        placeholder="Group Name" />
                       </FormGroup>
-                      <FormGroup>
-                        <Label for="author" >Author:</Label>
-                        <Input type="author" name="author" id="author" placeholder={this.state.author} />
-                      </FormGroup>
-                      <Button color="secondary" block>Add Group</Button>
+                      <Button color="primary" type="submit">Add Group</Button>
                     </Form>
-                  </Collapse>
-                  <GroupList
-                    groups={this.state.groups}
-                    />
-              </Card>
-            </Collapse>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button color="primary" onClick={this.toggleDeck} style={{ marginBottom: '1rem' }} block>Decks</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Collapse isOpen={this.state.collapseDeck}>
-              <Card>
-                  <DeckList
-                    decks={this.state.decks}
-                    />
-              </Card>
-            </Collapse>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                className={classnames({ active: this.state.activeTab === '1' })}
-                onClick={() => { this.toggleTab('1'); }}
-                >
-                  LeaderBoard
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                className={classnames({ active: this.state.activeTab === '2' })}
-                onClick={() => { this.toggleTab('2'); }}
-                >
-                  Sessions
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                className={classnames({ active: this.state.activeTab === '3' })}
-                onClick={() => { this.toggleTab('3'); }}
-                >
-                  Analytics
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Col>
-        </Row>
-        <Row>
-          <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="1">
-              <Row>
-                <GroupUsers />
-              </Row>
-            </TabPane>
-            <TabPane tabId="2">
-              <Row>
-                <GroupSessions />
-              </Row>
-            </TabPane>
-            <TabPane tabId="3">
-              <Row>
-                <GroupStats />
-              </Row>
-            </TabPane>
-          </TabContent>
+                </Card>
+            </Col>
+          </Row>
+        </Col>
+        <Col className="Right Column">
+          <Row>
+            <Col>
+              <Container>
+                    <Card>
+                      <Route exact path={matchPath} render={() => (
+                        <div>
+                          <h3>Please select a Group on the left</h3>
+                        </div>
+                      )} />
+                      <Route
+                        path={`${matchPath}/:id`}
+                        render={({ match }) => {
+                          const group = this.state.groups.find(
+                            (a) => a.id === match.params.id
+                          );
+                          return (
+                            <Container>
+                            </Container>
+                          );
+                        }}
+                      />
+
+                    </Card>
+              </Container>
+            </Col>
+          </Row>
+        </Col>
         </Row>
       </Container>
     )

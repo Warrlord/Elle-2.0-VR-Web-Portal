@@ -11,30 +11,12 @@ const AddCard = (props) => {
 								<Input type="cardname" name="cardname" id="cardname" placeholder="English Word" />
 							</FormGroup>
 						</Col>
-						<Col>
-							<FormGroup>
-								<Label for="englishPic">English Text Image:</Label>
-								<Input type="file" name="transfile" id="englishPic" />
-								<FormText color="muted">
-									Pick a English Text Image for the card.
-								</FormText>
-							</FormGroup>
-						</Col>
 					</Row>
 				<Row>
 					<Col>
 						<FormGroup>
 							<Label for="transname">Translated Word:</Label>
 							<Input type="transname" name="transname" id="transname" placeholder="Translated Word" />
-						</FormGroup>
-					</Col>
-					<Col>
-						<FormGroup>
-							<Label for="tranpic">Translated Text Image:</Label>
-							<Input type="file" name="transfile" id="tranpic" />
-							<FormText color="muted">
-								Pick a translated text image for the card.
-							</FormText>
 						</FormGroup>
 					</Col>
 				</Row>
@@ -55,14 +37,6 @@ const AddCard = (props) => {
 							<FormText color="muted">
 								Pick an audio file for the card.
 							</FormText>
-						</FormGroup>
-					</Col>
-				</Row>
-				<Row>
-					<Col>
-						<FormGroup>
-							<Label for="author" disabled>Author</Label>
-							<Input type="name" name="author" id="author" placeholder="TempUser"/>
 						</FormGroup>
 					</Col>
 				</Row>

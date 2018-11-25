@@ -10,8 +10,6 @@ const CardList = (props) => {
               <th>#</th>
               <th>English</th>
               <th>Translated</th>
-              <th>English Image</th>
-              <th>Translated Image</th>
               <th>Picture</th>
               <th>Audio</th>
             </tr>
@@ -20,7 +18,7 @@ const CardList = (props) => {
             {props.cards.map((cards) => {
               return (
                 <Card
-                  key={cards.engName}
+                  key={cards.cardID}
                   cards={cards}/>
               )
             })}

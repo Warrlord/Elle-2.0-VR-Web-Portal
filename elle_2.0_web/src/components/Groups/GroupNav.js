@@ -4,20 +4,20 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import { NavLink as RNavLink} from 'react-router-dom';
 
 const GroupNav = (props) => {
-  const { decks, decksPathname } = props;
+  const { groups, groupsPathname } = props;
   return (
     <Nav vertical>
       <NavItem>
       {
-        decks.map((deck) => {
+        groups.map((group) => {
         return (
             <NavLink
-              key={deck.deckID}
-              to={`${decksPathname}/${deck.deckID}`}
+              key={group.groupID}
+              to={`${groupsPathname}/${group.groupID}`}
               className='item'
               tag={RNavLink}
             >
-              {deck.deckName}
+              {group.groupName}
             </NavLink>
         )})
       }

@@ -15,6 +15,7 @@ export default class Decks extends Component {
     super();
     this.toggle = this.toggle.bind(this);
     this.toggleNewCard = this.toggleNewCard.bind(this);
+    this.change = this.change.bind(this);
     this.state = {
       colapse: false,
       collapseNewCard: false,
@@ -35,8 +36,9 @@ export default class Decks extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://10.171.204.206/decks/49', { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') } })
-        .then(res => {
+      axios.get('http://10.171.204.206/decks/49', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => {
           console.log(res.data);
           const decks = res.data;
           this.setState({
@@ -48,14 +50,25 @@ export default class Decks extends Component {
 
   submitDeck(e) {
     e.preventDefault();
-    const jwt = localStorage.getItem('jwt');
-    console.log(jwt);
-    axios.post('http://10.171.204.206/deck', { headers: { Authorization: 'Bearer ${jwt}' },
-      deckName: this.state.deckName,
-      ttype: this.state.ttype,
-    }).then(res => {
+    var data = {
+          deckName: this.state.deckName,
+          ttype: this.state.ttype,
+    }
+    var headers = {
+        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+    }
+        axios.post('http://10.171.204.206/deck', data, {headers:headers})
+        .then(res => {
+          console.log(res.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
+  }
 
-    });
+  change(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   toggleNewCard() {
@@ -65,17 +78,6 @@ export default class Decks extends Component {
   toggle() {
     this.setState({ collapse: !this.state.collapse });
   }
-
-  formSubmitted(event) {
-  event.preventDefault();
-  this.setState({
-    newDeck: '',
-    decks: [...this.state.decks, {
-      title: this.state.newDeck,
-      author: "TempUser"
-    }]
-  });
-}
 
   render() {
 
@@ -95,12 +97,22 @@ export default class Decks extends Component {
                     />
                     <Form onSubmit={e => this.submitDeck(e)}>
                       <FormGroup>
-                        <Label for="deckname">Deck Name</Label>
-                        <Input type="text" name="deckname" id="deckname" placeholder="Deck Name" />
+                        <Label for="deckName">Deck Name</Label>
+                        <Input type="text"
+                        onChange={e => this.change(e)}
+                        value={this.state.deckName}
+                        name="deckName"
+                        id="deckName"
+                        placeholder="Deck Name" />
                       </FormGroup>
                       <FormGroup>
                         <Label for="ttype">Language Type</Label>
-                        <Input type="text" name="ttype" id="ttype" placeholder="Portuguess" />
+                        <Input type="text"
+                        onChange={e => this.change(e)}
+                        value={this.state.ttype}
+                        name="ttype"
+                        id="ttype"
+                        placeholder="Portuguess" />
                       </FormGroup>
                       <Button color="primary" block type="submit">Add Deck</Button>
                     </Form>
@@ -127,12 +139,9 @@ export default class Decks extends Component {
                           return (
                             <Container>
                               <Deck
-                                url={match.url}
+                                id={match.params.id}
                                 deck={deck}
                                 deckPathname={matchPath}
-                              />
-                              <CardList
-                                cards={this.state.cards}
                               />
                               <Button color="info" onClick={this.toggleNewCard} block>New Card</Button>
                                 <Collapse isOpen={this.state.collapseNewCard}>
