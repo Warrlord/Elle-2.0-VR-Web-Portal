@@ -7,7 +7,6 @@ const CardList = (props) => {
         <Table hover>
           <thead>
             <tr>
-              <th>#</th>
               <th>English</th>
               <th>Translated</th>
               <th>Picture</th>

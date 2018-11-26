@@ -41,9 +41,7 @@ class Deck extends React.Component {
             <Col>
               <Media body>
                 <Media heading>
-                  Deck Name : {}
                 </Media>
-
               </Media>
             </Col>
 

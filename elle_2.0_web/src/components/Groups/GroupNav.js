@@ -12,12 +12,12 @@ const GroupNav = (props) => {
         groups.map((group) => {
         return (
             <NavLink
-              key={group.groupID}
-              to={`${groupsPathname}/${group.groupID}`}
+              key={group.id}
+              to={`${groupsPathname}/${group.id}`}
               className='item'
               tag={RNavLink}
             >
-              {group.groupName}
+              {group.name}
             </NavLink>
         )})
       }

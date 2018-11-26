@@ -22,6 +22,12 @@ export default class Decks extends Component {
       userID: "",
       username: "",
 
+      front: "",
+      back: "",
+      cardName: "",
+      difficultly: 1,
+      gifLocation: null,
+
       deckName: "",
       ttype: "",
 
@@ -112,7 +118,7 @@ export default class Decks extends Component {
                         value={this.state.ttype}
                         name="ttype"
                         id="ttype"
-                        placeholder="Portuguess" />
+                        placeholder="Language" />
                       </FormGroup>
                       <Button color="primary" block type="submit">Add Deck</Button>
                     </Form>
@@ -136,6 +142,9 @@ export default class Decks extends Component {
                           const deck = this.state.decks.find(
                             (a) => a.id === match.params.id
                           );
+                          const deckName = this.state.decks.find(
+                            (a) => a.deckName === match.params.id
+                          );
                           return (
                             <Container>
                               <Deck
@@ -145,7 +154,9 @@ export default class Decks extends Component {
                               />
                               <Button color="info" onClick={this.toggleNewCard} block>New Card</Button>
                                 <Collapse isOpen={this.state.collapseNewCard}>
-                                  <AddCard />
+                                  <AddCard
+                                  id={match.params.id}
+                                  />
                                 </Collapse>
                             </Container>
                           );
