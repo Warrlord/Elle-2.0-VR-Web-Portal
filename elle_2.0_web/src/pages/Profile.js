@@ -30,18 +30,21 @@ export default class Profile extends React.Component {
     })
   }
 
-
 submitPass(e) {
     e.preventDefault();
-    axios.post('http://10.171.204.206/pw', {
-      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') },
-      userID: this.state.userID,
-      pw: this.state.newpass,
-    }).then(res => {
-      console.log(res.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
+    var data = {
+          userID: this.state.userID,
+          pw: this.state.newpass,
+    }
+    var headers = {
+        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+    }
+        axios.post('http://10.171.204.206/users/reset', data, {headers:headers})
+        .then(res => {
+          console.log(res.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
   }
 
   componentDidMount() {

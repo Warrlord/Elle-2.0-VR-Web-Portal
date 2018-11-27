@@ -13,9 +13,11 @@ export default class Decks extends Component {
     this.toggle = this.toggle.bind(this);
     this.toggleNewCard = this.toggleNewCard.bind(this);
     this.change = this.change.bind(this);
+    this.deleteDeck = this.deleteDeck.bind(this);
     this.state = {
       colapse: false,
       collapseNewCard: false,
+      deckID: "",
       userID: "",
       username: "",
 
@@ -50,6 +52,9 @@ export default class Decks extends Component {
         });
     }
 
+  deleteDeck(e) {
+
+  }
   submitDeck(e) {
     e.preventDefault();
     var data = {
@@ -97,6 +102,7 @@ export default class Decks extends Component {
                       decks={this.state.decks}
                       decksPathname={matchPath}
                     />
+                    <br/>
                     <Form onSubmit={e => this.submitDeck(e)}>
                       <FormGroup>
                         <Label for="deckName">Deck Name</Label>
@@ -117,6 +123,15 @@ export default class Decks extends Component {
                         placeholder="Language" />
                       </FormGroup>
                       <Button color="primary" block type="submit">Add Deck</Button>
+                    </Form>
+                    <br />
+                    <Form onSubmit={e => this.deleteDeck(e)}>
+                      <Label for="cardID">Deck ID:</Label>
+                      <Input type="text" name="cardID"
+                      onChange={e => this.change(e)}
+                      value={this.state.deckID}
+                      id="username" placeholder="Username" />
+                      <Button color="danger" type="submit">Delete Card</Button>
                     </Form>
                 </Card>
             </Col>
