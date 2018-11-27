@@ -14,8 +14,6 @@ export default class GroupUsers extends Component {
 
 	render() {
 
-		const { name, decks } = this.props
-
 		return (
 			<form onSubmit={this.submit} className="add-day-form">
 

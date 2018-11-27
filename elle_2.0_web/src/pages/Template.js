@@ -32,13 +32,10 @@ export default class Template extends React.Component {
     return (
       <div>
         <Navbar light expand="md">
-          <NavbarBrand to="/sessions" tag={RNavLink}>Elle VR</NavbarBrand>
+          <NavbarBrand to="/decks" tag={RNavLink}>Elle VR</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink to="/groups" tag={RNavLink}>Groups</NavLink>
-              </NavItem>
               <NavItem>
                 <NavLink to="/decks" tag={RNavLink}>Decks</NavLink>
               </NavItem>
@@ -51,7 +48,7 @@ export default class Template extends React.Component {
                     <NavLink to="/profile" tag={RNavLink}>Profile</NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink to="/sessions" tag={RNavLink}>Sessions</NavLink>
+                    <NavLink to="/userlist" tag={RNavLink}>UserList</NavLink>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>

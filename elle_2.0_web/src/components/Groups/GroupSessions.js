@@ -14,8 +14,6 @@ export default class GroupSessions extends Component {
 
 	render() {
 
-		const { name, decks } = this.props
-
 		return (
 			<div>
 

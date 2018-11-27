@@ -7,9 +7,6 @@ import AddCard from '../components/Decks/AddCard';
 import DeckNav from '../components/Decks/DeckNav';
 import Deck from '../components/Decks/Deck';
 
-
-import CardList from '../components/Decks/CardList';
-
 export default class Decks extends Component {
   constructor() {
     super();
@@ -46,7 +43,6 @@ export default class Decks extends Component {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
       }).then(res => {
           console.log(res.data);
-          const decks = res.data;
           this.setState({
             decks : res.data });
         }).catch(function (error) {
@@ -141,9 +137,6 @@ export default class Decks extends Component {
                         render={({ match }) => {
                           const deck = this.state.decks.find(
                             (a) => a.id === match.params.id
-                          );
-                          const deckName = this.state.decks.find(
-                            (a) => a.deckName === match.params.id
                           );
                           return (
                             <Container>

@@ -1,18 +1,24 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 
 class User extends Component {
+	constructor(props){
+		super(props);
 
-render() {
+		this.state = {
+			users: this.props.users
+		}
+	}
 
-	const { username, email, admin, makeAdmin } = this.props
-    return (
-        <div className="member">
-        	<h1>{username}</h1>
-        	<a onClick={makeAdmin}>Make Admin</a>
-        	<p><a href={`mailto:${email}`}>{email}</a></p>
-        </div>
-    )
-}
+	render() {
+	    return (
+				<tr>
+					<td>{this.state.users.id}</td>
+					<td>{this.state.users.username}</td>
+		      <td>{this.state.users.permission}</td>
+		      <td>{this.state.user.pendingAdmin}</td>
+		    </tr>
+	    )
+	}
 }
 
 export default User

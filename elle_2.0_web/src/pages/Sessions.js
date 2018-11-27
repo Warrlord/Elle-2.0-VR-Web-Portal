@@ -3,11 +3,10 @@ import { Card, Container, Row, Col, } from 'reactstrap';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
-import SessionList from '../components/Sessions/SessionList';
 import SessionNav from '../components/Sessions/SessionNav';
 import Rounds from '../components/Sessions/Rounds';
 
-export default class Sessions extends React.Component {
+export default class Sessions extends Component {
   constructor(props) {
     super(props);
 
@@ -21,12 +20,16 @@ export default class Sessions extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://10.171.204.206/sessions/')
-      .then(res => {
-        const sessions = res.data;
-        this.setState({ sessions });
-      });
-  }
+      axios.get('http://10.171.204.206/sessions', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => {
+          console.log(res.data);
+          this.setState({
+            sessions : res.data });
+        }).catch(function (error) {
+          console.log(error);
+        });
+    }
 
   render() {
 
@@ -61,12 +64,12 @@ export default class Sessions extends React.Component {
                   <Route
                     path={`${matchPath}/:sessionID`}
                     render={({ match }) => {
-                      const album = this.state.sessions.find(
+                      const session = this.state.sessions.find(
                         (a) => a.id === match.params.sessionID
                       );
                       return (
                         <Rounds
-                          session={this.state.session}
+                          session={session}
                         />
                       );
                     }}

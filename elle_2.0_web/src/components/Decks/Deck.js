@@ -1,13 +1,15 @@
 import React from 'react'
-import { Collapse, Button, Card, Form, FormGroup, Label, Input, Container, Row, FormText, Col, Nav, NavItem, NavLink, Media } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Button, Container, Row, Col, Media, Form, Label, Input } from 'reactstrap';
 import CardList from './CardList'
 import axios from 'axios';
 
 class Deck extends React.Component {
   constructor(props) {
     super(props);
+    this.change = this.change.bind(this);
+    this.submit = this.submit.bind(this);
     this.state = {
+      cardID: '',
       id: this.props.id,
       deck: this.props.deck,
 
@@ -18,13 +20,22 @@ class Deck extends React.Component {
     };
 
   }
+  change(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  submit(e) {
+    e.preventDefault();
+    console.log(this.state.cardID);
+  }
 
   componentDidMount() {
       axios.get('http://10.171.204.206/deck/' +this.state.id, {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') },
       }).then(res => {
           console.log(res.data);
-          const cards = res.data;
           this.setState({
             cards : res.data });
         }).catch(function (error) {
@@ -44,12 +55,24 @@ class Deck extends React.Component {
                 </Media>
               </Media>
             </Col>
-
           </Row>
             <CardList
             cards = {this.state.cards}
             />
           <Row>
+            <Col>
+              <Form onSubmit={e => this.submit(e)}>
+                <Label for="cardID">Card ID:</Label>
+                <Input type="text" name="cardID"
+                onChange={e => this.change(e)}
+                value={this.state.cardID}
+                id="username" placeholder="Username" />
+                <Button color="danger" type="submit">Delete Card</Button>
+              </Form>
+            </Col>
+          </Row>
+          <Row>
+            <br/>
 
           </Row>
         </Container>

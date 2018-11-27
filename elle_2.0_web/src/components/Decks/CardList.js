@@ -11,6 +11,7 @@ const CardList = (props) => {
               <th>Translated</th>
               <th>Picture</th>
               <th>Audio</th>
+							<th>ID</th>
             </tr>
           </thead>
           <tbody>

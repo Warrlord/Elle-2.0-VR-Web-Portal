@@ -8,7 +8,7 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
-        userID: this.props.userID,
+        userID: '',
         users: [],
         username: "temp",
         permissionGroup: "Admin",
@@ -21,7 +21,6 @@ export default class Profile extends React.Component {
     };
 
     this.change = this.change.bind(this);
-    this.submitMot = this.submitMot.bind(this);
     this.submitPass= this.submitPass.bind(this);
   }
 
@@ -31,27 +30,36 @@ export default class Profile extends React.Component {
     })
   }
 
-submitMot(e) {
-    e.preventDefault();
-    axios.post('http://10.171.204.206/update/:userID/motivation', {
-      motivation: this.state.motivation,
-    });
-  }
 
 submitPass(e) {
     e.preventDefault();
-    axios.post('http://10.171.204.206/update/:userID/newpass', {
-      password: this.state.newpass,
+    axios.post('http://10.171.204.206/pw', {
+      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') },
+      userID: this.state.userID,
+      pw: this.state.newpass,
+    }).then(res => {
+      console.log(res.data);
+    }).catch(function (error) {
+      console.log(error);
     });
   }
 
-componentDidMount() {
-  axios.get('http://10.171.204.206/user/:userID')
-    .then(res => {
-      const users = res.data;
-      this.setState({ users });
-    });
-}
+  componentDidMount() {
+      axios.get('http://10.171.204.206/user', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => {
+          console.log(res.data);
+          this.setState({
+            userID: res.data.id,
+            username: res.data.username,
+            sex: res.data.sex,
+            age: res.data.age,
+            motivation: res.data.motivation, });
+        }).catch(function (error) {
+          console.log(error);
+        });
+    }
+
 
   render() {
     return (
@@ -82,14 +90,13 @@ componentDidMount() {
             disabled
             value={this.state.sex} />
           </FormGroup>
-          <FormGroup onSubmit={e => this.submitMot(e)}>
+          <FormGroup>
             <Label for="motivation" sm={2}>Motivation:</Label>
             <Input type="textarea"
             name="motivation"
             id="motivation"
-            onChange={e => this.change(e)}
+            disabled
             value={this.state.motivation} />
-            <Button type="submit">Update Description</Button>
           </FormGroup>
         </Form>
         <Form className="PasswordReset" onSubmit={e => this.submitPass(e)}>
@@ -102,10 +109,6 @@ componentDidMount() {
             id="newpass"
             onChange={e => this.change(e)}
             value={this.state.newpass} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="re-password">Re-Enter New Password</Label>
-            <Input type="text" name="re-password" id="re-password" placeholder="Plaease Re-enter new password" />
           </FormGroup>
           <Button type="submit">Submit New Password</Button>
         </Form>

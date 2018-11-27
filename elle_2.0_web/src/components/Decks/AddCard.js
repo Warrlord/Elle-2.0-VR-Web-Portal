@@ -9,23 +9,28 @@ class AddCard extends React.Component {
 		this.change = this.change.bind(this);
 
 		this.state = {
+			cardID: "",
 			id: this.props.id,
 			front: "",
 			back: "",
 			cardName: "",
 			difficulty: 1,
-			selectedFile: null
+			selectedPicFile: null,
+			selectedAudioFile: null
+
 		};
 	}
 
-	uploadHandler = () => {
-	  const formData = new FormData()
-	  formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
-	  axios.post('http://10.171.204.206/file-upload', formData)
+	picFileChangedHandler = (event) => {
+	  this.setState({
+			selectedPicFile: event.target.files[0]
+		})
 	}
 
-	fileChangedHandler = (event) => {
-	  this.setState({selectedFile: event.target.files[0]})
+	audioFileChangedHandler = (event) => {
+	  this.setState({
+			selectedAudioFile: event.target.files[0]
+		})
 	}
 
 	change(e) {
@@ -35,26 +40,43 @@ class AddCard extends React.Component {
   }
 
 	submitCard(e) {
-    e.preventDefault();
-		console.log(this.state.cardName);
-		console.log(this.state.front);
-		console.log(this.state.back);
-		console.log(this.state.difficulty);
+    e.preventDefault();;
+		const formPicData = new FormData()
+		formPicData.append('file', this.state.selectedPicFile)
+		const formAudioData = new FormData()
+		formAudioData.append('file', this.state.selectedAudioFile)
     var data = {
 			front: this.state.front,
 			back: this.state.back,
 			cardName: this.state.cardName,
 			difficulty: this.state.difficulty,
     }
+		var fileheader = {
+			'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+			'Content-Type': 'multipart/form-data'
+		}
     var headers = {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
     }
       axios.post('http://10.171.204.206/card/'+this.state.id, data, {headers:headers})
       .then(res => {
         console.log(res.data);
+					axios.post('http://10.171.204.206/card/image/'+res.data.cardID, formPicData, {headers:fileheader})
+					.then(res => {
+						console.log(res.data);
+					}).catch(function (error) {
+						console.log(error);
+					});
+					axios.post('http://10.171.204.206/card/sound/'+res.data.cardID, formAudioData, {headers:fileheader})
+					.then(res => {
+						console.log(res.data);
+					}).catch(function (error) {
+						console.log(error);
+					});
       }).catch(function (error) {
         console.log(error);
       });
+
   }
 
 		render () {
@@ -103,7 +125,7 @@ class AddCard extends React.Component {
 					<Col>
 						<FormGroup>
 							<Label for="picFile">Picture: </Label>
-							<Input type="file" onChange={this.fileChangedHandler} name="picfile" id="picFile" />
+							<Input type="file" onChange={this.picFileChangedHandler} />
 							<FormText color="muted">
 								Pick an actual Image for the card.
 							</FormText>
@@ -112,7 +134,7 @@ class AddCard extends React.Component {
 					<Col>
 						<FormGroup>
 							<Label for="audioFile">Audio File: </Label>
-							<Input type="file" onChange={this.fileChangedHandler} name="audiofile" id="audioFile" />
+							<Input type="file" onChange={this.audioFileChangedHandler} />
 							<FormText color="muted">
 								Pick an audio file for the card.
 							</FormText>
@@ -121,7 +143,7 @@ class AddCard extends React.Component {
 				</Row>
 				<Row>
 					<Col>
-						<Button color="primary" block type="submit">Add Card</Button>
+						<Button color="primary" type="submit" block>Add Card</Button>
 					</Col>
 				</Row>
 				</Form>

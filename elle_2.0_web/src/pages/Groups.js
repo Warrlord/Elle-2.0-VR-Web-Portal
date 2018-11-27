@@ -1,17 +1,13 @@
 import React from 'react';
-import { Collapse, Button, Card, Form, FormGroup,
+import { Button, Card, Form, FormGroup,
   Label, Input, Container, Row, Col, TabContent,
-  TabPane, Nav, NavItem, NavLink, CardTitle, CardText } from 'reactstrap';
+  TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import axios from 'axios';
+import classnames from 'classnames';
 import { Route } from 'react-router-dom';
 
-
-import GroupList from '../components/Groups/GroupList';
-import GroupDecks from '../components/Groups/GroupDecks';
 import GroupUsers from '../components/Groups/GroupUsers';
 import GroupSessions from '../components/Groups/GroupSessions';
-import GroupStats from '../components/Groups/GroupStats';
-import DeckList from '../components/Decks/DeckList';
 import GroupNav from '../components/Groups/GroupNav';
 
 export default class Groups extends React.Component {
@@ -19,8 +15,10 @@ export default class Groups extends React.Component {
     super();
     this.change = this.change.bind(this);
     this.submitGroup = this.submitGroup.bind(this);
+    this.toggle = this.toggle.bind(this);
 
     this.state = {
+      activeTab: '1',
       groupName: '',
       groups: [],
 
@@ -36,7 +34,6 @@ export default class Groups extends React.Component {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
       }).then(res => {
           console.log(res.data);
-          const groups = res.data;
           this.setState({
             groups : res.data });
         }).catch(function (error) {
@@ -56,6 +53,13 @@ export default class Groups extends React.Component {
     });
   }
 
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  }
   change(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -105,16 +109,46 @@ export default class Groups extends React.Component {
                       <Route
                         path={`${matchPath}/:id`}
                         render={({ match }) => {
-                          const group = this.state.groups.find(
-                            (a) => a.id === match.params.id
-                          );
                           return (
                             <Container>
+                            <div>
+                              <Nav tabs>
+                                <NavItem>
+                                  <NavLink
+                                    className={classnames({ active: this.state.activeTab === '1' })}
+                                    onClick={() => { this.toggle('1'); }}
+                                  >
+                                    Users
+                                  </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                  <NavLink
+                                    className={classnames({ active: this.state.activeTab === '2' })}
+                                    onClick={() => { this.toggle('2'); }}
+                                  >
+                                    Sessions
+                                  </NavLink>
+                                </NavItem>
+                              </Nav>
+                              <TabContent activeTab={this.state.activeTab}>
+                                <TabPane tabId="1">
+                                  <GroupUsers
+                                    id={match.params.groupID}
+                                    groupPathname={matchPath}
+                                  />
+                                </TabPane>
+                                <TabPane tabId="2">
+                                  <GroupSessions
+                                    id={match.params.groupID}
+                                    groupPathname={matchPath}
+                                  />
+                                </TabPane>
+                              </TabContent>
+                              </div>
                             </Container>
                           );
                         }}
                       />
-
                     </Card>
               </Container>
             </Col>
