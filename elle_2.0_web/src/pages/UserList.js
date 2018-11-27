@@ -13,6 +13,28 @@ class UserList extends Component {
         }
     }
 
+    change(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    }
+
+    submit(e) {
+      e.preventDefault();
+      var data = {
+            userID: this.state.userID,
+      }
+      var headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+      }
+          axios.post('http://10.171.204.206/admin', data, {headers:headers})
+          .then(res => {
+            console.log(res.data);
+          }).catch(function (error) {
+            console.log(error);
+          });
+    }
+
     componentDidMount() {
         axios.get('http://10.171.204.206/users', {
           headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
@@ -29,25 +51,12 @@ class UserList extends Component {
     render() {
         return (
           <Container className="user-list">
-            <Row>
-              <Col>
-                <Form onSubmit={e => this.submit(e)}>
-                  <Label for="cardID">Card ID:</Label>
-                  <Input type="text" name="cardID"
-                  onChange={e => this.change(e)}
-                  value={this.state.cardID}
-                  id="username" placeholder="Username" />
-                  <Button color="danger" type="submit">Delete Card</Button>
-                </Form>
-              </Col>
-            </Row>
             <Table hover>
               <thead>
                 <tr>
                   <th>id</th>
                   <th>Username</th>
                   <th>Permission</th>
-                  <th>Pending Admin</th>
                 </tr>
               </thead>
               <tbody>

@@ -14,8 +14,7 @@ class User extends Component {
 				<tr>
 					<td>{this.state.users.id}</td>
 					<td>{this.state.users.username}</td>
-		      <td>{this.state.users.permission}</td>
-		      <td>{this.state.user.pendingAdmin}</td>
+		      <td>{this.state.users.permissions}</td>
 		    </tr>
 	    )
 	}
