@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import User from '../components/UserList/User';
-import { Container, Row, Col, Table, Form, Label, Input, Button } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 import axios from 'axios';
 
 class UserList extends Component {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Container, Row, Col, Table, Form, Label, Input, Button } from 'reactstrap';
 
 class User extends Component {
 	constructor(props){
