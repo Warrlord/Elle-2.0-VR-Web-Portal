@@ -53,7 +53,19 @@ export default class Decks extends Component {
     }
 
   deleteDeck(e) {
-
+    e.preventDefault();
+    var data = {
+          deckID: this.state.deckID,
+    }
+    var headers = {
+        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+    }
+        axios.post('', data, {headers:headers})
+        .then(res => {
+          console.log(res.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
   }
 
   submitDeck(e) {
@@ -132,7 +144,7 @@ export default class Decks extends Component {
                       onChange={e => this.change(e)}
                       value={this.state.deckID}
                       id="username" placeholder="Username" />
-                      <Button color="danger" type="submit">Delete Card</Button>
+                      <Button color="danger" type="submit">Delete Deck</Button>
                     </Form>
                 </Card>
             </Col>
