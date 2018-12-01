@@ -40,43 +40,48 @@ class AddCard extends React.Component {
   }
 
 	submitCard(e) {
-    e.preventDefault();;
-		const formPicData = new FormData()
-		formPicData.append('file', this.state.selectedPicFile)
-		const formAudioData = new FormData()
-		formAudioData.append('file', this.state.selectedAudioFile)
-    var data = {
-			front: this.state.front,
-			back: this.state.back,
-			cardName: this.state.cardName,
-			difficulty: this.state.difficulty,
-    }
-		var fileheader = {
-			'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
-			'Content-Type': 'multipart/form-data'
+		if (	this.state.front != null && this.state.back != null && this.state.cardName != null &&
+			this.state.selectedPicFile != null && this.state.selectedAudioFile != null)
+		{
+	    e.preventDefault();;
+			const formPicData = new FormData()
+			formPicData.append('file', this.state.selectedPicFile)
+			const formAudioData = new FormData()
+			formAudioData.append('file', this.state.selectedAudioFile)
+	    var data = {
+				front: this.state.front,
+				back: this.state.back,
+				cardName: this.state.cardName,
+				difficulty: this.state.difficulty,
+	    }
+			var fileheader = {
+				'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+				'Content-Type': 'multipart/form-data'
+			}
+	    var headers = {
+	        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+	    }
+	      axios.post('http://10.171.204.206/card/'+this.state.id, data, {headers:headers})
+	      .then(res => {
+	        console.log(res.data);
+						axios.post('http://10.171.204.206/card/image/'+res.data.cardID, formPicData, {headers:fileheader})
+						.then(res => {
+							console.log(res.data);
+						}).catch(function (error) {
+							console.log(error);
+						});
+						axios.post('http://10.171.204.206/card/sound/'+res.data.cardID, formAudioData, {headers:fileheader})
+						.then(res => {
+							console.log(res.data);
+						}).catch(function (error) {
+							console.log(error);
+						});
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+		} else {
+			console.log("Please fill all inputs!");
 		}
-    var headers = {
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-    }
-      axios.post('http://10.171.204.206/card/'+this.state.id, data, {headers:headers})
-      .then(res => {
-        console.log(res.data);
-					axios.post('http://10.171.204.206/card/image/'+res.data.cardID, formPicData, {headers:fileheader})
-					.then(res => {
-						console.log(res.data);
-					}).catch(function (error) {
-						console.log(error);
-					});
-					axios.post('http://10.171.204.206/card/sound/'+res.data.cardID, formAudioData, {headers:fileheader})
-					.then(res => {
-						console.log(res.data);
-					}).catch(function (error) {
-						console.log(error);
-					});
-      }).catch(function (error) {
-        console.log(error);
-      });
-
   }
 
 		render () {
