@@ -60,7 +60,7 @@ export default class Decks extends Component {
     var headers = {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
     }
-        axios.post('', data, {headers:headers})
+        axios.delete('http://10.171.204.206/deck', data, {headers:headers})
         .then(res => {
           console.log(res.data);
         }).catch(function (error) {

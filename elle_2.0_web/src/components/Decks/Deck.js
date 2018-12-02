@@ -27,8 +27,19 @@ class Deck extends React.Component {
   }
 
   submit(e) {
-    e.preventDefault();
-    console.log(this.state.cardID);
+      e.preventDefault();
+      var data = {
+            cardID: this.state.cardID,
+      }
+      var headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+      }
+          axios.delete('http://10.171.204.206/card', data, {headers:headers})
+          .then(res => {
+            console.log(res.data);
+          }).catch(function (error) {
+            console.log(error);
+          });
   }
 
   componentDidMount() {
